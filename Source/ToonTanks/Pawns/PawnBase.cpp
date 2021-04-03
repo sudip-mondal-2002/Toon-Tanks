@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "PawnBase.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 APawnBase::APawnBase()
@@ -17,8 +18,9 @@ APawnBase::APawnBase()
 	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh"));
 	TurretMesh->SetupAttachment(BaseMesh);
 
-	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile spawn Point"));
+	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
+
 }
 
 // Called when the game starts or when spawned

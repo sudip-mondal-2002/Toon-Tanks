@@ -2,17 +2,18 @@
 
 #pragma once
 
-#include "Components/CapsuleComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "PawnBase.generated.h"
+
+class UCapsuleComponent;
 
 UCLASS()
 class TOONTANKS_API APawnBase : public APawn
 {
 	GENERATED_BODY()
 
-private:
+private: 
 	UPROPERTY()
 	UCapsuleComponent* CapsuleComp;
 	UPROPERTY()
@@ -25,6 +26,7 @@ private:
 public:
 	// Sets default values for this pawn's properties
 	APawnBase();
+
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
