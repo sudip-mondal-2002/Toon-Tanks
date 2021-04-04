@@ -12,7 +12,7 @@ APawnTank::APawnTank()
 	SpringArm->SetupAttachment(RootComponent);
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	Camera->SetupAttachment(RootComponent);
+	Camera->SetupAttachment(SpringArm);
 }
 
 // Called when the game starts or when spawned
@@ -25,7 +25,7 @@ void APawnTank::BeginPlay()
 void APawnTank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
+
 	Rotate();
 	Move();
 }
