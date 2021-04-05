@@ -18,6 +18,8 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* Camera; 
 
+	APlayerController* PlayerControllerRef;
+
 	FVector MoveDirection;
 	FQuat RotationDirection;
 
@@ -46,5 +48,7 @@ protected:
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	virtual void HandleDestruction() override;
 
 };
