@@ -3,6 +3,7 @@
 #include "PawnBase.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "../Projectiles/ProjectileBase.h"
 
 // Sets default values
 APawnBase::APawnBase()
@@ -21,24 +22,27 @@ APawnBase::APawnBase()
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
-
 }
 
-void APawnBase::RotateTurret(FVector LookAtTarget) 
+void APawnBase::RotateTurret(FVector LookAtTarget)
 {
 	FVector EndLocation = FVector(LookAtTarget.X, LookAtTarget.Y, TurretMesh->GetComponentLocation().Z);
 	FVector StartLocation = TurretMesh->GetComponentLocation();
-	FRotator TurretRotation = FVector(EndLocation-StartLocation).Rotation();
+	FRotator TurretRotation = FVector(EndLocation - StartLocation).Rotation();
 	TurretMesh->SetWorldRotation(TurretRotation);
 }
 
-void APawnBase::Fire() 
+void APawnBase::Fire()
 {
-	UE_LOG(LogTemp,Warning,TEXT("Checked fire condition"));
+	if (ProjectileClass)
+	{
+		FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
+		FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
+		AProjectileBase *TempProjectile = GetWorld()->SpawnActor<AProjectileBase>(ProjectileClass, SpawnLocation,SpawnRotation);
+		TempProjectile->SetOwner(this);
+	}
 }
 
-void APawnBase::HandleDestruction() 
+void APawnBase::HandleDestruction()
 {
-	
 }
-
