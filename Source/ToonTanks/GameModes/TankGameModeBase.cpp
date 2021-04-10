@@ -10,6 +10,7 @@
 void ATankGameModeBase::BeginPlay() 
 {
     Super::BeginPlay();
+    HandleGameStart();
 }
 
 void ATankGameModeBase::ActorDied(AActor* DeadActor) 
