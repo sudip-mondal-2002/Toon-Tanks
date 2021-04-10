@@ -6,20 +6,30 @@
 #include "PawnTank.h"
 #include "TimerManager.h"
 
-//Called when the game starts or when spawned
+// Called when the game starts or when spawned
 void APawnTurret::BeginPlay()
 {
     Super::BeginPlay();
 
     GetWorld()->GetTimerManager().SetTimer(FireRateTimerHandle, this, &APawnTurret::CheckFireCondition, FireRate, true);
 
-    PlayerPawn = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this,0));
+    PlayerPawn = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));
 }
-//Called Every Frame
+
+void APawnTurret::HandleDestruction() 
+{
+    // Call base pawn class HandleDestruction to play effects. 
+    Super::HandleDestruction();
+    Destroy();    
+}
+
+// Called every frame
 void APawnTurret::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-    if (!PlayerPawn || ReturnDistanceFromPlayer()>FireRange){
+
+    if(!PlayerPawn || ReturnDistanceToPlayer() > FireRange)
+    {
         return;
     }
 
@@ -28,29 +38,25 @@ void APawnTurret::Tick(float DeltaTime)
 
 void APawnTurret::CheckFireCondition() 
 {
-    if (!PlayerPawn)
+    // If Player == null || is Dead THEN BAIL!!
+    if(!PlayerPawn)
     {
         return;
     }
-    if (ReturnDistanceFromPlayer()<=FireRange)
+    // IF Player IS in range THEN FIRE!! 
+    if(ReturnDistanceToPlayer() <= FireRange)
     {
         Fire();
     }
+   
 }
 
-float APawnTurret::ReturnDistanceFromPlayer() 
+float APawnTurret::ReturnDistanceToPlayer() 
 {
     if (!PlayerPawn)
     {
-        return 0.f;
+        0.0f;
     }
 
-    float Distance = FVector::Dist(PlayerPawn->GetActorLocation(), GetActorLocation());
-    return Distance;
-}
-
-void APawnTurret::HandleDestruction() 
-{
-	Super::HandleDestruction();
-    Destroy();
+    return FVector::Dist(PlayerPawn->GetActorLocation(), GetActorLocation());
 }
