@@ -8,6 +8,7 @@
 
 class UProjectileMovementComponent;
 class UParticleSystemComponent;
+class USoundBase;
 UCLASS()
 class TOONTANKS_API AProjectileBase : public AActor
 {
@@ -31,6 +32,10 @@ private:
 	float Damage = 50.f;
 	UPROPERTY(EditAnywhere, Category = "Effects")
 	UParticleSystem* HitParticle;
+	UPROPERTY(EditAnywhere, Category = "Effects")	
+	USoundBase* HitSound;
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	USoundBase* LaunchSound;
 
 	//Functions
 	UFUNCTION()
